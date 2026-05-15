@@ -1,0 +1,10 @@
+blog:
+  content_dir: content/posts
+  language: zh-cn
+  default_categories:
+    - AI学习
+
+generation:
+  model: claude-sonnet-4-20250514
+  max_tokens: 4096
+  temperature: 0.7

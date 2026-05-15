@@ -1,0 +1,73 @@
+baseURL = "https://YulinH10.github.io/ai-notes/"
+locale = "zh-CN"
+defaultContentLanguage = "zh"
+title = "AI学习笔记"
+theme = "PaperMod"
+paginate = 10
+
+[params]
+  env = "production"
+  description = "记录每天的 AI 学习进度，由 Claude Agent 辅助生成"
+  author = "YulinH10"
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowWordCount = true
+  ShowRssButtonInSectionTermList = true
+  UseHugoToc = true
+  disableSpecial1stPost = false
+  defaultTheme = "auto"
+
+  [params.homeInfoParams]
+    Title = "AI学习笔记"
+    Content = "每天记录 AI/ML 学习进度，探索人工智能的奥秘。"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/YulinH10"
+
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+
+[[menu.main]]
+  identifier = "home"
+  name = "首页"
+  url = "/"
+  weight = 1
+
+[[menu.main]]
+  identifier = "archives"
+  name = "归档"
+  url = "/archives/"
+  weight = 2
+
+[[menu.main]]
+  identifier = "categories"
+  name = "分类"
+  url = "/categories/"
+  weight = 3
+
+[[menu.main]]
+  identifier = "tags"
+  name = "标签"
+  url = "/tags/"
+  weight = 4
+
+[[menu.main]]
+  identifier = "about"
+  name = "关于"
+  url = "/about/"
+  weight = 5
+
+[markup]
+  [markup.highlight]
+    codeFences = true
+    guessSyntax = true
+    lineNos = false
+    style = "monokai"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]

@@ -1,0 +1,71 @@
+name: Generate Post and Deploy
+
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 每天 UTC 2:00（北京时间 10:00）
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: '文章主题（留空则随机选取）'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: true
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Generate blog post
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          if [ -n "${{ github.event.inputs.topic }}" ]; then
+            python -m agent.agent --topic "${{ github.event.inputs.topic }}"
+          else
+            python -m agent.agent
+          fi
+
+      - name: Commit new post
+        run: |
+          git config user.name "AI Blog Agent"
+          git config user.email "agent@ai-notes.bot"
+          git add content/posts/
+          git diff --cached --quiet || git commit -m "feat(post): auto-generated daily post"
+          git push
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build Hugo site
+        run: hugo --minify
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
