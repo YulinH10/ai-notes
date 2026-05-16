@@ -1,5 +1,5 @@
 ---
-title: "从 Item ID 到 Semantic ID：推荐系统中召回与精排技术路线的分化、收敛与统一——综述"
+title: "从 Item ID 到 Semantic ID：推荐系统中召回与精排技术路线的分化、收敛与统一"
 date: 2026-05-15T15:00:00+08:00
 draft: false
 tags: ["Semantic ID", "推荐系统", "生成式推荐", "长序列建模", "召回", "精排", "综述"]
